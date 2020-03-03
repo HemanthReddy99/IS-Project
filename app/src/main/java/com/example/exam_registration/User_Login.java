@@ -28,9 +28,19 @@ DatabaseHelper db;
                 String password = e2.getText().toString();
                 Boolean chkmailpass = db.emailpassword(mail,password);
                 if(chkmailpass==true){
-                    Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(User_Login.this, StudentProfile.class);
-                    startActivity(intent);
+                    String check = db.getuserroleforlogin(mail).toString();
+                    //Toast.makeText(getApplicationContext(),check,Toast.LENGTH_SHORT).show();
+                    if(check.compareTo("Student")==0){
+                        Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(User_Login.this, StudentProfile.class);
+                        startActivity(intent);
+                    }
+                    else if(db.getuserroleforlogin(mail).equals("Teacher")){
+                        Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(User_Login.this, TeacherProfile.class);
+                        startActivity(intent);
+                    }
+
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"Either Email or Password is incorrect",Toast.LENGTH_SHORT).show();

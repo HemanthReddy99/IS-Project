@@ -103,7 +103,7 @@ public class StudentProfile extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Student Deleted Successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(StudentProfile.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                String ID = db.getstudentid();
+                String ID = db.getuserid();
                 db.delete(ID);
                 startActivity(intent);
             }

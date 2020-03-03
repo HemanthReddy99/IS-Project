@@ -139,6 +139,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return username;
     }
 
+    public String getuserphno()throws SQLException{
+        String username = "";
+        String tablename = "User";
+        String keyid = "SID";
+        String keyname = "Sphno";
+        Cursor cursor = this.getReadableDatabase().query(tablename,new String[]{keyid,keyname},"loggedin = 'yes'",null,null,null,null);
+        if(cursor.moveToFirst()){
+            do {
+                username = cursor.getString(1);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return username;
+    }
+
+    public String getuserroleforlogin(String email){
+        String userrole = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select Role from User where loggedin=?",new String[]{"yes"});
+        if(cursor.moveToFirst()){
+            do {
+                userrole = cursor.getString(0);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return userrole;
+    }
+
     public String getuserrole()throws SQLException{
         String userrole = "";
         String tablename = "User";

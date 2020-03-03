@@ -58,7 +58,7 @@ public class Student_ViewExam extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                insert = db.insert_student_applied(SID,EID,AID);
+                insert = db.insert_user_applied(SID,EID,AID);
                 int flag = 1;
 
                 if(insert)

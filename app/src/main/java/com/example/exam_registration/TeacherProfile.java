@@ -24,15 +24,15 @@ public class TeacherProfile extends AppCompatActivity {
         v3 = findViewById(R.id.profilephno);
         v4 = findViewById(R.id.teacherdelete);
 
-        v1.setText(db.admingetusername());
-        v2.setText(db.admingetusermail());
-        v3.setText(db.admingetuserphno());
+        v1.setText(db.getusername());
+        v2.setText(db.getusermail());
+        v3.setText(db.getuserphno());
 
         LinearLayout showdetails = findViewById(R.id.studentdetails);
         showdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor res = db.admingetAllData();
+                Cursor res = db.getAllData();
                 if(res.getCount() == 0) {
                     // show message
                     showMessage("Error","Nothing found");
@@ -81,10 +81,10 @@ public class TeacherProfile extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent admin_logout = new Intent(getApplicationContext(), MainActivity.class);
-                admin_logout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                db.adminlogout();
-                startActivity(admin_logout);
+                Intent user_logout = new Intent(getApplicationContext(), MainActivity.class);
+                user_logout.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                db.logout();
+                startActivity(user_logout);
             }
         });
 
@@ -103,8 +103,8 @@ public class TeacherProfile extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Teacher Deleted Successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(TeacherProfile.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                String ID = db.admingetuserid();
-                db.admindelete(ID);
+                String ID = db.getuserid();
+                db.delete(ID);
                 startActivity(intent);
             }
         });
