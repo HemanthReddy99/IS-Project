@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Info.db";
-    public static final String TABLE_NAME = "Student";
+    public static final String TABLE_NAME = "User";
     public static final String COL_1 = "SID";
     public static final String COL_2 = "Smail";
     public static final String COL_3 = "Spass";
@@ -38,13 +38,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table Student (SID text PRIMARY KEY, Sfname text, Smname text, Slname text, Sdob text, Sphno text, Sdept text, Scgpa text, Sadd1 text, Sadd2 text, Sadd3 text, loggedin text)");
-        db.execSQL("create table StudentLogin (SID text, Smail text, Spass text, loggedin text, PRIMARY KEY (SID,Smail), FOREIGN KEY (SID) REFERENCES Student(SID) on delete cascade on update cascade)");
+        db.execSQL("create table User (SID text PRIMARY KEY, Sfname text, Smname text, Slname text, Sdob text, Sphno text, Sdept text, Scgpa text, Sadd1 text, Sadd2 text, Sadd3 text, Role text, loggedin text)");
+        db.execSQL("create table UserLogin (SID text, Smail text, Spass text, loggedin text, PRIMARY KEY (SID,Smail), FOREIGN KEY (SID) REFERENCES User(SID) on delete cascade on update cascade)");
         db.execSQL("create table Admin (AID text PRIMARY KEY, Afname text, Amname text, Alname text, Adob text, Aphno text, Adept text, Aadd1 text, Aadd2 text, Aadd3 text, loggedin text)");
         db.execSQL("create table AdminLogin (AID text, Amail text, Apass text, loggedin text, PRIMARY KEY (AID,Amail), FOREIGN KEY (AID) REFERENCES Administrator(AID) on delete cascade on update cascade)");
         db.execSQL("create table Exams (EID text PRIMARY KEY, AID text, Ename text, Edate text, Eduration text, FOREIGN KEY (AID) REFERENCES Admin(AID)on delete cascade on update cascade)");
-        db.execSQL("create table Applies (SID text, EID text, PRIMARY KEY(SID, EID), FOREIGN KEY (SID) REFERENCES Student(SID) on delete cascade on update cascade, FOREIGN KEY (EID) REFERENCES Exams(EID) on delete cascade on update cascade)");
-        db.execSQL("create table Registrations (SID text, AID text, EID text, Status text, PRIMARY KEY(SID, AID, EID), FOREIGN KEY (SID) REFERENCES Student(SID) on delete cascade on update cascade, FOREIGN KEY (AID) REFERENCES Admin(AID) on delete cascade on update cascade, FOREIGN KEY (EID) REFERENCES Exams(EID) on delete cascade on update cascade)");
+        db.execSQL("create table Applies (SID text, EID text, PRIMARY KEY(SID, EID), FOREIGN KEY (SID) REFERENCES User(SID) on delete cascade on update cascade, FOREIGN KEY (EID) REFERENCES Exams(EID) on delete cascade on update cascade)");
+        db.execSQL("create table Registrations (SID text, AID text, EID text, Status text, PRIMARY KEY(SID, AID, EID), FOREIGN KEY (SID) REFERENCES User(SID) on delete cascade on update cascade, FOREIGN KEY (AID) REFERENCES Admin(AID) on delete cascade on update cascade, FOREIGN KEY (EID) REFERENCES Exams(EID) on delete cascade on update cascade)");
 
 
 
@@ -56,8 +56,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS Student");
-        db.execSQL("DROP TABLE IF EXISTS StudentLogin");
+        db.execSQL("DROP TABLE IF EXISTS User");
+        db.execSQL("DROP TABLE IF EXISTS UserLogin");
         db.execSQL("DROP TABLE IF EXISTS Admin");
         db.execSQL("DROP TABLE IF EXISTS AdminLogin");
 
@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String sid,String mail,String pass, String fname, String mname, String lname, String dob, String phno, String dept, String cgpa, String add1, String add2, String add3 ) {
+    public boolean insertData(String sid,String mail,String pass, String fname, String mname, String lname, String dob, String phno, String dept, String cgpa, String add1, String add2, String add3, String role ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("SID",sid);
@@ -86,6 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("Sadd1", add1);
         contentValues.put("Sadd2", add2);
         contentValues.put("Sadd3", add3);
+        contentValues.put("Role", role);
         contentValues.put("loggedin", "no");
 
         ContentValues contentValues1 = new ContentValues();
@@ -94,8 +95,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues1.put("Spass", pass);
         contentValues1.put("loggedin", "no");
 
-        long result = db.insert("Student",null ,contentValues);
-        long result1 = db.insert("StudentLogin", null, contentValues1);
+        long result = db.insert("User",null ,contentValues);
+        long result1 = db.insert("UserLogin", null, contentValues1);
         return result != -1 && result1 != -1;
     }
 
@@ -103,19 +104,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Boolean chkidmail(String sid, String email)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * from Student where SID=?", new String[]{sid});
-        Cursor cursor1 = db.rawQuery("SELECT * from StudentLogin where Smail=?", new String[]{email});
+        Cursor cursor = db.rawQuery("SELECT * from User where SID=?", new String[]{sid});
+        Cursor cursor1 = db.rawQuery("SELECT * from UserLogin where Smail=?", new String[]{email});
 
         return cursor.getCount() <= 0 && cursor1.getCount() <= 0;
     }
 
     public Boolean emailpassword(String email,String password){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("Select * from StudentLogin where Smail=? and Spass=?",new String[]{email,password});
+        Cursor cursor = db.rawQuery("Select * from UserLogin where Smail=? and Spass=?",new String[]{email,password});
         if(cursor.getCount()>0){
             SQLiteDatabase mydb = this.getWritableDatabase();
-            mydb.execSQL("update StudentLogin set loggedin = 'yes' where Smail=?",new String[]{email});
-            mydb.execSQL("update Student set loggedin = 'yes' where Student.SID = (select SID from StudentLogin where loggedin ='yes')");
+            mydb.execSQL("update UserLogin set loggedin = 'yes' where Smail=?",new String[]{email});
+            mydb.execSQL("update User set loggedin = 'yes' where User.SID = (select SID from UserLogin where loggedin ='yes')");
             return true;
         }
         else {
@@ -125,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getusername()throws SQLException{
         String username = "";
-        String tablename = "Student";
+        String tablename = "User";
         String keyid = "SID";
         String keyname = "Sfname";
         Cursor cursor = this.getReadableDatabase().query(tablename,new String[]{keyid,keyname},"loggedin = 'yes'",null,null,null,null);
@@ -138,9 +139,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return username;
     }
 
+    public String getuserrole()throws SQLException{
+        String userrole = "";
+        String tablename = "User";
+        String keyid = "SID";
+        String keyname = "Role";
+        Cursor cursor = this.getReadableDatabase().query(tablename,new String[]{keyid,keyname},"loggedin = 'yes'",null,null,null,null);
+        if(cursor.moveToFirst()){
+            do {
+                userrole = cursor.getString(1);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return userrole;
+    }
+
     public String getusermail()throws SQLException{
         String usermail = "";
-        String tablename = "StudentLogin";
+        String tablename = "UserLogin";
         String keyid = "SID";
         String keyname = "Smail";
         Cursor cursor = this.getReadableDatabase().query(tablename,new String[]{keyid,keyname},"loggedin = 'yes'",null,null,null,null);
@@ -154,9 +170,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return usermail;
     }
 
-    public String getstudentid()throws SQLException{
+    public String getuserid()throws SQLException{
         String usermail = "";
-        String tablename = "StudentLogin";
+        String tablename = "UserLogin";
         String keyid = "SID";
         String keyname = "Smail";
         Cursor cursor = this.getReadableDatabase().query(tablename,new String[]{keyid,keyname},"loggedin = 'yes'",null,null,null,null);
@@ -172,7 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public String getusercgpa()throws SQLException{
         String usercgpa = "";
-        String tablename = "Student";
+        String tablename = "User";
         String keyid = "SID";
         String keyname = "Scgpa";
         Cursor cursor = this.getReadableDatabase().query(tablename,new String[]{keyid,keyname},"loggedin = 'yes'",null,null,null,null);
@@ -188,29 +204,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void logout(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("update Student set loggedin = 'no' where loggedin = 'yes'");
-        db.execSQL("update StudentLogin set loggedin = 'no' where loggedin = 'yes'");
+        db.execSQL("update User set loggedin = 'no' where loggedin = 'yes'");
+        db.execSQL("update UserLogin set loggedin = 'no' where loggedin = 'yes'");
 
     }
 
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = this.getReadableDatabase().rawQuery("select * from Student where loggedin = ?",new String[]{"yes"});
+        Cursor res = this.getReadableDatabase().rawQuery("select * from User where loggedin = ?",new String[]{"yes"});
         return res;
     }
 
     public void updateData(String fname, String mname, String lname, String dob, String phno, String dept, String cgpa, String add1, String add2, String add3){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("update Student set Sfname = ? where loggedin = 'yes'",new String[]{fname});
-        db.execSQL("update Student set Smname = ? where loggedin = 'yes'",new String[]{mname});
-        db.execSQL("update Student set Slname = ? where loggedin = 'yes'",new String[]{lname});
-        db.execSQL("update Student set Sdob = ? where loggedin = 'yes'",new String[]{dob});
-        db.execSQL("update Student set Sphno = ? where loggedin = 'yes'",new String[]{phno});
-        db.execSQL("update Student set Sdept = ? where loggedin = 'yes'",new String[]{dept});
-        db.execSQL("update Student set Scgpa = ? where loggedin = 'yes'",new String[]{cgpa});
-        db.execSQL("update Student set Sadd1 = ? where loggedin = 'yes'",new String[]{add1});
-        db.execSQL("update Student set Sadd2 = ? where loggedin = 'yes'",new String[]{add2});
-        db.execSQL("update Student set Sadd3 = ? where loggedin = 'yes'",new String[]{add3});
+        db.execSQL("update User set Sfname = ? where loggedin = 'yes'",new String[]{fname});
+        db.execSQL("update User set Smname = ? where loggedin = 'yes'",new String[]{mname});
+        db.execSQL("update User set Slname = ? where loggedin = 'yes'",new String[]{lname});
+        db.execSQL("update User set Sdob = ? where loggedin = 'yes'",new String[]{dob});
+        db.execSQL("update User set Sphno = ? where loggedin = 'yes'",new String[]{phno});
+        db.execSQL("update User set Sdept = ? where loggedin = 'yes'",new String[]{dept});
+        db.execSQL("update User set Scgpa = ? where loggedin = 'yes'",new String[]{cgpa});
+        db.execSQL("update User set Sadd1 = ? where loggedin = 'yes'",new String[]{add1});
+        db.execSQL("update User set Sadd2 = ? where loggedin = 'yes'",new String[]{add2});
+        db.execSQL("update User set Sadd3 = ? where loggedin = 'yes'",new String[]{add3});
 
        // return true;
     }
@@ -228,12 +244,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //
     public void delete (String ID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("Student","SID = ? ",new String[]{ID});
-        db.delete("StudentLogin","SID = ?", new String[]{ID});
+        db.delete("User","SID = ? ",new String[]{ID});
+        db.delete("UserLogin","SID = ?", new String[]{ID});
         db.delete("Applies","SID = ?", new String[]{ID});
         db.delete("Registrations","SID = ?", new String[]{ID});
-        //db.execSQL("delete from Student where loggedin = ?",new String[]{"yes"});
-//        db.execSQL("delete from StudentLogin where loggedin = ?",new String[]{"yes"});
+        //db.execSQL("delete from User where loggedin = ?",new String[]{"yes"});
+//        db.execSQL("delete from UserLogin where loggedin = ?",new String[]{"yes"});
 //        db.execSQL("delete from Applies where SID = ?",new String[]{ID});
 //        db.execSQL("delete from Registrations where SID = ?",new String[]{ID});
         //return;
@@ -789,7 +805,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         String sid = "";
 
-        Cursor cursor = this.getReadableDatabase().query("Student",new String[]{"SID","SID"},"loggedin = 'yes'",null,null,null,null);
+        Cursor cursor = this.getReadableDatabase().query("User",new String[]{"SID","SID"},"loggedin = 'yes'",null,null,null,null);
         if(cursor.moveToFirst()){
             do {
                 sid = cursor.getString(1);
@@ -800,7 +816,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sid;
     }
 
-    public boolean insert_student_applied(String sid, String eid, String aid)
+    public boolean insert_user_applied(String sid, String eid, String aid)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -827,7 +843,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String sid = "";
 
-        Cursor cursor = this.getReadableDatabase().query("Student",new String[]{"SID","SID"},"loggedin = 'yes'",null,null,null,null);
+        Cursor cursor = this.getReadableDatabase().query("User",new String[]{"SID","SID"},"loggedin = 'yes'",null,null,null,null);
         if(cursor.moveToFirst()){
             do {
                 sid = cursor.getString(1);
@@ -875,7 +891,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
 
-        String query_to_be_given = "select Exams.EID, Student.SID, Sfname, Smail, Ename, Edate from Student,StudentLogin,Exams,Registrations where Exams.EID = Registrations.EID AND Student.SID = Registrations.SID AND Student.SID = StudentLogin.SID AND Registrations.AID=?";
+        String query_to_be_given = "select Exams.EID, User.SID, Sfname, Smail, Ename, Edate from User,UserLogin,Exams,Registrations where Exams.EID = Registrations.EID AND User.SID = Registrations.SID AND User.SID = UserLogin.SID AND Registrations.AID=?";
 
         Cursor query = db.rawQuery(query_to_be_given, new String[]{aid});
 
@@ -925,8 +941,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete("AdminLogin","AID = ?", new String[]{ID});
         //db.delete("Applies","AID = ?", new String[]{ID});
         db.delete("Registrations","AID = ?", new String[]{ID});
-        //db.execSQL("delete from Student where loggedin = ?",new String[]{"yes"});
-//        db.execSQL("delete from StudentLogin where loggedin = ?",new String[]{"yes"});
+        //db.execSQL("delete from User where loggedin = ?",new String[]{"yes"});
+//        db.execSQL("delete from UserLogin where loggedin = ?",new String[]{"yes"});
 //        db.execSQL("delete from Applies where SID = ?",new String[]{ID});
 //        db.execSQL("delete from Registrations where SID = ?",new String[]{ID});
         //return;
@@ -940,8 +956,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete("Exams","EID = ?", new String[]{ID});
         db.delete("Applies","EID = ?", new String[]{ID});
         db.delete("Registrations","EID = ?", new String[]{ID});
-        //db.execSQL("delete from Student where loggedin = ?",new String[]{"yes"});
-//        db.execSQL("delete from StudentLogin where loggedin = ?",new String[]{"yes"});
+        //db.execSQL("delete from User where loggedin = ?",new String[]{"yes"});
+//        db.execSQL("delete from UserLogin where loggedin = ?",new String[]{"yes"});
 //        db.execSQL("delete from Applies where SID = ?",new String[]{ID});
 //        db.execSQL("delete from Registrations where SID = ?",new String[]{ID});
         //return;

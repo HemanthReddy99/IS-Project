@@ -9,36 +9,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Student_registration extends AppCompatActivity {
+public class User_registration extends AppCompatActivity {
 
     DatabaseHelper myDb;
 
-    EditText Smail,Sfname,Smname,Slname,Sdob,Sphno,Sdept,SID,Scgpa,Sadd1,Sadd2,Sadd3,Spass,Srepass;
+    EditText Smail,Sfname,Smname,Slname,Sdob,Sphno,Sdept,SID,Scgpa,Sadd1,Sadd2,Sadd3,Spass,Srepass,Role;
     Button Sregister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_registration);
+        setContentView(R.layout.activity_user_registration);
 
         myDb = new DatabaseHelper(this);
 
-        Smail = findViewById(R.id.email_student_registration_text_view);
-        Sfname = findViewById(R.id.first_name_student_registration_text_view);
-        Smname = findViewById(R.id.middle_name_student_registration_text_view);
-        Slname = findViewById(R.id.last_name_student_registration_text_view);
-        Sdob = findViewById(R.id.dob_student_registration_text_view);
-        Sphno = findViewById(R.id.phone_student_registration_text_view);
-        Sdept = findViewById(R.id.department_student_registration_text_view);
-        SID = findViewById(R.id.rollno_student_registration_text_view);
-        Scgpa = findViewById(R.id.cgpa_student_registration_text_view);
-        Sadd1 = findViewById(R.id.addr1_student_registration_text_view);
-        Sadd2 = findViewById(R.id.addr2_student_registration_text_view);
-        Sadd3 = findViewById(R.id.addr3_student_registration_text_view);
-        Spass = findViewById(R.id.password_student_registration_text_view);
-        Srepass = findViewById(R.id.password_reenter_student_registration_text_view);
+        Smail = findViewById(R.id.email_registration_text_view);
+        Sfname = findViewById(R.id.first_name_registration_text_view);
+        Smname = findViewById(R.id.middle_name_registration_text_view);
+        Slname = findViewById(R.id.last_name_registration_text_view);
+        Sdob = findViewById(R.id.dob_registration_text_view);
+        Sphno = findViewById(R.id.phone_registration_text_view);
+        Sdept = findViewById(R.id.department_registration_text_view);
+        SID = findViewById(R.id.rollno_registration_text_view);
+        Scgpa = findViewById(R.id.cgpa_registration_text_view);
+        Sadd1 = findViewById(R.id.addr1_registration_text_view);
+        Sadd2 = findViewById(R.id.addr2_registration_text_view);
+        Sadd3 = findViewById(R.id.addr3_registration_text_view);
+        Role = findViewById(R.id.role_registration_text_view);
+        Spass = findViewById(R.id.password_registration_text_view);
+        Srepass = findViewById(R.id.password_reenter_registration_text_view);
 
-        Sregister = findViewById(R.id.register_student_button);
+        Sregister = findViewById(R.id.register_button);
 
         Sregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,10 +57,11 @@ public class Student_registration extends AppCompatActivity {
                 String add1 = Sadd1.getText().toString();
                 String add2 = Sadd2.getText().toString();
                 String add3 = Sadd3.getText().toString();
+                String role = Role.getText().toString();
                 String pass = Spass.getText().toString();
                 String repass = Srepass.getText().toString();
 
-                if(email.equals("") || fname.equals("") || mname.equals("") || lname.equals("") || dob.equals("") || phno.equals("") || dept.equals("") || rollno.equals("") || cgpa.equals("") || add1.equals("") || add2.equals("") || add3.equals("") || pass.equals("") || repass.equals(""))
+                if(email.equals("") || fname.equals("") || mname.equals("") || lname.equals("") || dob.equals("") || phno.equals("") || dept.equals("") || rollno.equals("") || cgpa.equals("") || add1.equals("") || add2.equals("") || add3.equals("") || role.equals("") ||pass.equals("") || repass.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "One or more fields empty", Toast.LENGTH_SHORT).show();
                 }
@@ -71,7 +73,7 @@ public class Student_registration extends AppCompatActivity {
 
                         if(chkidmail==true)
                         {
-                            Boolean insert = myDb.insertData(rollno,email,pass,fname,mname,lname,dob,phno,dept,cgpa,add1,add2,add3);
+                            Boolean insert = myDb.insertData(rollno,email,pass,fname,mname,lname,dob,phno,dept,cgpa,add1,add2,add3,role);
 
                             if(insert==true)
                             {
@@ -82,7 +84,7 @@ public class Student_registration extends AppCompatActivity {
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(), "Email or Student already exists", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Email already exists", Toast.LENGTH_SHORT).show();
                         }
 
                     }

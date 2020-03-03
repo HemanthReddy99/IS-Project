@@ -47,13 +47,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:rowCount="1"
-                android:columnCount="2"
+                android:columnCount="1"
                 android:layout_below="@id/Llayout"
                 android:alignmentMode="alignMargins"
                 android:columnOrderPreserved="false">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/studentlogin"
+                    android:id="@+id/login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_rowWeight="1"
@@ -63,7 +63,7 @@
                     card_view:cardElevation="60dp">
 
                     <LinearLayout
-                        android:id="@+id/studentloginlayout"
+                        android:id="@+id/loginlayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -80,7 +80,8 @@
                             android:layout_width="95dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="Student Login"
+                            android:text="Login"
+                            android:textAlignment="center"
                             android:textColor="#000000"
                             android:textSize="14sp" />
 
@@ -90,45 +91,45 @@
 
                 </androidx.cardview.widget.CardView>
 
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/teacherlogin"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_margin="12dp"-->
+<!--                    card_view:cardCornerRadius="12dp"-->
+<!--                    card_view:cardElevation="60dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/teacherloginlayout"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="16dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="80dp"-->
+<!--                            android:layout_height="80dp"-->
+<!--                            android:scaleType="fitCenter"-->
+<!--                            android:src="@drawable/teacherlogin" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginTop="12dp"-->
+<!--                            android:text="Teacher Login"-->
+<!--                            android:textColor="#000000"-->
+<!--                            android:textSize="14sp" />-->
+
+<!--                    </LinearLayout>-->
+
+
+<!--                </androidx.cardview.widget.CardView>-->
+
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/teacherlogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="12dp"
-                    card_view:cardCornerRadius="12dp"
-                    card_view:cardElevation="60dp">
-
-                    <LinearLayout
-                        android:id="@+id/teacherloginlayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/teacherlogin" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Teacher Login"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/studentregistration"
+                    android:id="@+id/registration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_rowWeight="1"
@@ -153,7 +154,8 @@
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="Student Registration"
+                            android:text="Register"
+                            android:textAlignment="center"
                             android:textSize="14sp"
                             android:layout_marginTop="12dp"
                             android:textColor="#000000"/>
@@ -163,42 +165,42 @@
 
 
                 </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/teacherregistration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_margin="12dp"
-                    card_view:cardCornerRadius="12dp"
-                    card_view:cardElevation="60dp">
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/teacherregistration"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_margin="12dp"-->
+<!--                    card_view:cardCornerRadius="12dp"-->
+<!--                    card_view:cardElevation="60dp">-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:id="@+id/teacherregistrationlayout">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:padding="16dp"-->
+<!--                        android:gravity="center"-->
+<!--                        android:id="@+id/teacherregistrationlayout">-->
 
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/teacherlogin"
-                            android:scaleType="fitCenter"/>
-                        <TextView
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:text="Teacher Registration"
-                            android:textSize="14sp"
-                            android:layout_marginTop="12dp"
-                            android:textColor="#000000"/>
+<!--                        <ImageView-->
+<!--                            android:layout_width="80dp"-->
+<!--                            android:layout_height="80dp"-->
+<!--                            android:src="@drawable/teacherlogin"-->
+<!--                            android:scaleType="fitCenter"/>-->
+<!--                        <TextView-->
+<!--                            android:layout_width="80dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Teacher Registration"-->
+<!--                            android:textSize="14sp"-->
+<!--                            android:layout_marginTop="12dp"-->
+<!--                            android:textColor="#000000"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
 
 
-                </androidx.cardview.widget.CardView>
+<!--                </androidx.cardview.widget.CardView>-->
 
             </GridLayout>
 

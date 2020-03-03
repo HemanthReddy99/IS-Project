@@ -16,50 +16,50 @@ public class MainActivity extends AppCompatActivity{
 
 
         //On Click Feature to go from main to student login
-        CardView student_login = findViewById(R.id.studentlogin);
+        CardView student_login = findViewById(R.id.login);
 
         student_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent main_to_stu_login = new Intent(getBaseContext(), Student_Login.class);
+                Intent main_to_stu_login = new Intent(getBaseContext(), User_Login.class);
                 startActivity(main_to_stu_login);
             }
         });
 
         //On Click Feature to go from main to teacher login
-        CardView teacher_login = findViewById(R.id.teacherlogin);
-
-        teacher_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent main_to_teacher_login = new Intent(getBaseContext(), Teacher_login.class);
-                startActivity(main_to_teacher_login);
-            }
-        });
+//        CardView teacher_login = findViewById(R.id.teacherlogin);
+//
+//        teacher_login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent main_to_teacher_login = new Intent(getBaseContext(), Teacher_login.class);
+//                startActivity(main_to_teacher_login);
+//            }
+//        });
 
         //On Click Feature to go from main to student registration
 
-        CardView student_registration = findViewById(R.id.studentregistration);
+        CardView student_registration = findViewById(R.id.registration);
 
         student_registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent main_to_student_registration = new Intent(getBaseContext(), Student_registration.class);
+                Intent main_to_student_registration = new Intent(getBaseContext(), User_registration.class);
                 startActivity(main_to_student_registration);
             }
         });
 
         //On Click Feature to go from main to teacher registration
 
-        CardView teacher_registration = findViewById(R.id.teacherregistration);
-
-        teacher_registration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent main_to_teacher_registration = new Intent(getBaseContext(), Teacher_registration.class);
-                startActivity(main_to_teacher_registration);
-            }
-        });
+//        CardView teacher_registration = findViewById(R.id.teacherregistration);
+//
+//        teacher_registration.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent main_to_teacher_registration = new Intent(getBaseContext(), Teacher_registration.class);
+//                startActivity(main_to_teacher_registration);
+//            }
+//        });
 
 
     }

@@ -9,14 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Student_Login extends AppCompatActivity {
+public class User_Login extends AppCompatActivity {
 EditText e1,e2;
 Button b;
 DatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_login);
+        setContentView(R.layout.activity_user_login);
         db = new DatabaseHelper(this);
         e1 = findViewById(R.id.student_email_login_text_view);
         e2 = findViewById(R.id.student_password_login_text_view);
@@ -29,7 +29,7 @@ DatabaseHelper db;
                 Boolean chkmailpass = db.emailpassword(mail,password);
                 if(chkmailpass==true){
                     Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Student_Login.this, StudentProfile.class);
+                    Intent intent = new Intent(User_Login.this, StudentProfile.class);
                     startActivity(intent);
                 }
                 else {
