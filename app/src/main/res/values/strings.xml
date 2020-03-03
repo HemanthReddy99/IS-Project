@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">exam_registration</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open_teacher">Open navigation drawer teacher</string>
+    <string name="navigation_drawer_close_teacher">Close navigation drawer teacher</string>
+    <string name="title_activity_student_home">Student_Home</string>
+
+</resources>

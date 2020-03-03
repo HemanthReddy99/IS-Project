@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.exam_registration">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="Find Exam"
+        android:roundIcon="@drawable/icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".TeacherApproveExam"></activity>
+        <activity android:name=".Teacher_YourExam" />
+        <activity android:name=".StudentRegistered" />
+        <activity android:name=".StudentAllExams" />
+        <activity android:name=".TeacherAddExam" />
+        <activity android:name=".TeacherUpdateDetails" />
+        <activity android:name=".StudentUpdateDetails" />
+        <activity android:name=".TeacherProfile" />
+        <activity android:name=".StudentProfile" />
+        <activity
+            android:name=".Student_ViewExam"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Teacher_login" />
+        <activity android:name=".Teacher_registration" />
+        <activity android:name=".Student_registration" />
+        <activity
+            android:name=".Student_Login"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>
