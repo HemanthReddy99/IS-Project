@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table User (SID text PRIMARY KEY, Sfname text, Smname text, Slname text, Sdob text, Sphno text, Sdept text, Scgpa text, Sadd1 text, Sadd2 text, Sadd3 text, Role text, loggedin text)");
+        db.execSQL("create table User (SID text PRIMARY KEY, Sfname text, Smname text, Slname text, Sdob text, Sphno text, Sdept text, Sadd1 text, Sadd2 text, Sadd3 text, Role text, loggedin text)");
         db.execSQL("create table UserLogin (SID text, Smail text, Spass text, loggedin text, PRIMARY KEY (SID,Smail), FOREIGN KEY (SID) REFERENCES User(SID) on delete cascade on update cascade)");
         db.execSQL("create table Admin (AID text PRIMARY KEY, Afname text, Amname text, Alname text, Adob text, Aphno text, Adept text, Aadd1 text, Aadd2 text, Aadd3 text, loggedin text)");
         db.execSQL("create table AdminLogin (AID text, Amail text, Apass text, loggedin text, PRIMARY KEY (AID,Amail), FOREIGN KEY (AID) REFERENCES Administrator(AID) on delete cascade on update cascade)");
@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String sid,String mail,String pass, String fname, String mname, String lname, String dob, String phno, String dept, String cgpa, String add1, String add2, String add3, String role ) {
+    public boolean insertData(String sid,String mail,String pass, String fname, String mname, String lname, String dob, String phno, String dept, String add1, String add2, String add3, String role ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("SID",sid);
@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("Sdob", dob);
         contentValues.put("Sphno", phno);
         contentValues.put("Sdept", dept);
-        contentValues.put("Scgpa", cgpa);
+        //contentValues.put("Scgpa", cgpa);
         contentValues.put("Sadd1", add1);
         contentValues.put("Sadd2", add2);
         contentValues.put("Sadd3", add3);
@@ -218,7 +218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String usercgpa = "";
         String tablename = "User";
         String keyid = "SID";
-        String keyname = "Scgpa";
+        String keyname = "Sphno";
         Cursor cursor = this.getReadableDatabase().query(tablename,new String[]{keyid,keyname},"loggedin = 'yes'",null,null,null,null);
         if(cursor.moveToFirst()){
             do {

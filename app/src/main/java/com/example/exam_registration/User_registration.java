@@ -31,7 +31,7 @@ public class User_registration extends AppCompatActivity {
         Sphno = findViewById(R.id.phone_registration_text_view);
         Sdept = findViewById(R.id.department_registration_text_view);
         SID = findViewById(R.id.rollno_registration_text_view);
-        Scgpa = findViewById(R.id.cgpa_registration_text_view);
+      //Scgpa = findViewById(R.id.cgpa_registration_text_view);
         Sadd1 = findViewById(R.id.addr1_registration_text_view);
         Sadd2 = findViewById(R.id.addr2_registration_text_view);
         Sadd3 = findViewById(R.id.addr3_registration_text_view);
@@ -53,7 +53,7 @@ public class User_registration extends AppCompatActivity {
                 String phno = Sphno.getText().toString();
                 String dept = Sdept.getText().toString();
                 String rollno = SID.getText().toString();
-                String cgpa  = Scgpa.getText().toString();
+                //String cgpa  = Scgpa.getText().toString();
                 String add1 = Sadd1.getText().toString();
                 String add2 = Sadd2.getText().toString();
                 String add3 = Sadd3.getText().toString();
@@ -61,7 +61,7 @@ public class User_registration extends AppCompatActivity {
                 String pass = Spass.getText().toString();
                 String repass = Srepass.getText().toString();
 
-                if(email.equals("") || fname.equals("") || mname.equals("") || lname.equals("") || dob.equals("") || phno.equals("") || dept.equals("") || rollno.equals("") || cgpa.equals("") || add1.equals("") || add2.equals("") || add3.equals("") || role.equals("") ||pass.equals("") || repass.equals(""))
+                if(email.equals("") || fname.equals("") || mname.equals("") || lname.equals("") || dob.equals("") || phno.equals("") || dept.equals("") || rollno.equals("") || add1.equals("") || add2.equals("") || add3.equals("") || role.equals("") ||pass.equals("") || repass.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "One or more fields empty", Toast.LENGTH_SHORT).show();
                 }
@@ -73,7 +73,7 @@ public class User_registration extends AppCompatActivity {
 
                         if(chkidmail==true)
                         {
-                            Boolean insert = myDb.insertData(rollno,email,pass,fname,mname,lname,dob,phno,dept,cgpa,add1,add2,add3,role);
+                            Boolean insert = myDb.insertData(rollno,email,pass,fname,mname,lname,dob,phno,dept,add1,add2,add3,role);
 
                             if(insert==true)
                             {

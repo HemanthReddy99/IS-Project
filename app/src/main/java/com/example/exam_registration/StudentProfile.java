@@ -66,8 +66,8 @@ public class StudentProfile extends AppCompatActivity {
                     buffer.append("Date of Birth :"+ " "+ res.getString(4)+"\n");
                     buffer.append("Phone Number :"+ " "+ res.getString(5)+"\n");
                     buffer.append("Department :"+ " "+ res.getString(6)+"\n");
-                    buffer.append("CGPA :"+ " "+ res.getString(7)+"\n");
-                    buffer.append("Address :"+ " "+ res.getString(8)+ " "+ res.getString(9)+ " "+ res.getString(10)+"\n\n");
+                    //buffer.append("CGPA :"+ " "+ res.getString(7)+"\n");
+                    buffer.append("Address :"+ " "+ res.getString(7)+ " "+ res.getString(8)+ " "+ res.getString(9)+"\n\n");
 
                 }
 
